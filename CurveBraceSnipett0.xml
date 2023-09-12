@@ -1,0 +1,23 @@
+<view>
+ <bracket expanded="true" height="885" heightcond="50" width="81">
+  <bracket expanded="true" height="212" heightcond="44" width="85"/>
+  <bracket expanded="true" height="139" heightcond="40" width="82"/>
+  <bracket expanded="true" height="494" heightcond="32" width="83">
+   <bracket expanded="true" height="480" heightcond="40" width="108">
+    <bracket expanded="true" height="459" heightcond="44" width="172">
+     <bracket expanded="true" height="443" heightcond="45" width="109">
+      <bracket expanded="true" height="435" heightcond="28" width="165">
+       <bracket expanded="true" height="428" heightcond="44" width="71">
+        <bracket expanded="true" height="236" heightcond="47" width="73"/>
+       </bracket>
+      </bracket>
+     </bracket>
+    </bracket>
+   </bracket>
+  </bracket>
+ </bracket>
+ <bracket expanded="true" height="285" heightcond="40" width="663">
+  <clause height="46" tag="true" width="175"/>
+ </bracket>
+ <bracket expanded="true" height="143" heightcond="40" width="628"/>
+</view>
