@@ -1,11 +1,16 @@
 package sourceViewer;
 
 import java.util.regex.Pattern;
+
+import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.MenuDetectEvent;
+import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
+import org.w3c.dom.Element;
 
 public class ClauseText extends StyledText {
 	Color red = Display.getCurrent().getSystemColor(SWT.COLOR_RED);
@@ -25,18 +30,42 @@ public class ClauseText extends StyledText {
 			}
 		});
 		addListener(SWT.MouseDoubleClick, e->{
-				parent.switchTag();
-				redraw();
+			parent.switchTag();
+			redraw();
 		}); 
-//		addVerifyListener(e -> {
-//			if (userInputEnabled)	{
-//				parent.getElement().setAttribute("userinput",parent.getElement().getAttribute("userinput")+e.text+":");
-//				parent.getElement().setAttribute("userinputstart",parent.getElement().getAttribute("userinputstart")+e.start+":");
-//				parent.getElement().setAttribute("userinputend",parent.getElement().getAttribute("userinputend")+e.end+":");
-//			}
-//		});
+
+		addMenuDetectListener(new MenuDetectListener () {
+			@Override
+			public void menuDetected(MenuDetectEvent e) {
+				ClauseText c = (ClauseText) e.widget;
+				AClause aClause = (AClause) c.getParent();
+				Element element = aClause.element;
+				element.getOwnerDocument().setUserData("CLICKON", element, null);
+			}
+		});
+
+
+
+
+
+		//		addVerifyListener(e -> {
+		//			if (userInputEnabled)	{
+		//				parent.getElement().setAttribute("userinput",parent.getElement().getAttribute("userinput")+e.text+":");
+		//				parent.getElement().setAttribute("userinputstart",parent.getElement().getAttribute("userinputstart")+e.start+":");
+		//				parent.getElement().setAttribute("userinputend",parent.getElement().getAttribute("userinputend")+e.end+":");
+		//			}
+		//		});
 		loadText();
 		setUserInputEnabled(true);
+
+		EMenuService eMenuService = (EMenuService) parent.element.getOwnerDocument().getUserData("EMenuService");
+		eMenuService.registerContextMenu(this, "SourceViewer.popupmenu");
+
+
+
+
+
+
 	}
 	/**
 	 * @param userInput the userInput to set
@@ -50,6 +79,12 @@ public class ClauseText extends StyledText {
 		//           012345678 
 		String text="lancier\nLancier\nLancier";
 		setText(text);
+		///setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GRAY)); 
+		StyleRange[] style = new StyleRange[1];
+		style[0]= new StyleRange();
+		style[0].background=Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
+		int[] ranges = new int[] { 10, 10};
+		setStyleRanges(ranges,style);
 
 		if (!parent.getElement().hasAttribute("userinput")) return;
 

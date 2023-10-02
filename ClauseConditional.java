@@ -32,7 +32,7 @@ public class ClauseConditional extends AClause {
 	CurveBrace curveBrace;
 	ExpandButton expandButton;
 	Clauses clauses; 
-	ClauseText clauseText;
+
 	Sash h1,h2;
 	Composite parent;
 	Color h1Color=new Color(getDisplay(),10,220,209);
@@ -79,7 +79,7 @@ public class ClauseConditional extends AClause {
 		h1.addListener(SWT.Selection, e -> {
 			int delta =e.y-h1.getLocation().y;
 			setHeight(delta+getHeight());
-			clauses2.layout();
+			parent.layout();
 		});
 
 		h2=new Sash(this,SWT.HORIZONTAL);
@@ -104,26 +104,7 @@ public class ClauseConditional extends AClause {
 			FormData fd3 = (FormData)clauseText.getLayoutData();
 			fd3.height=getHeightCond();
 			clauseText.requestLayout();
-
-			clauses2.layout();
 		});
-
-		addControlListener(new ControlListener() {
-
-			@Override
-			public void controlMoved(ControlEvent e) {
-
-			}
-
-			@Override
-			public void controlResized(ControlEvent e) {
-				clauses2.layout();
-			}
-		});
-
-
-
-
 
 
 		clauseText=new ClauseText(this);
@@ -212,5 +193,17 @@ public class ClauseConditional extends AClause {
 	 */
 	public void setClausesPosition(int clausesPosition) {
 		this.clausesPosition = clausesPosition;
+	}
+
+
+	@Override
+	protected int getRealWidth() {
+		return parent.getClientArea().width;
+	}
+
+
+	@Override
+	protected int getRealHeight() {
+		return isExpanded()?getHeight():getHeightCond();
 	}
 }

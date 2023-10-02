@@ -16,8 +16,8 @@ public class ExpandButton extends Canvas {
 	private Cursor handCursor;
 	public ExpandButton(ClauseConditional parent) {
 		super(parent, SWT.NONE);
-		expanded = getAndDisposeImage("icons/expanded.png");
-		collapsed = getAndDisposeImage("icons/collapsed.png");
+		expanded = getAndDisposeImage("expanded.png");
+		collapsed = getAndDisposeImage("collapsed.png");
 		status=parent.isExpanded()?expanded:collapsed;
 		setCursor(getAndDisposeCursor(SWT.CURSOR_HAND));
 		addPaintListener(e ->{
